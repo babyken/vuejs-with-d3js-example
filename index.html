@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css" />
+
+    <title>Data Story - S1_007 Group Project</title>
+    <style>
+      .bar {
+        fill: steelblue;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" class="container">
+      <section class="section">
+        <div class="container">
+          <div class="columns is-centered">
+            <d3-chart
+              class="column is-narrow"
+              :title="chartTitle"
+              :chart-data="chartData"
+            />
+          </div>
+          <div class="columns is-centered">
+            <div class="column is-narrow">
+              <b-button
+                class="is-primary"
+                @click="onReload"
+                :loading="loadingData"
+                >Reload</b-button
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.1.1/d3.min.js"></script>
+    <script src="/assets/js/D3Chart.js"></script>
+    <script>
+      new Vue({
+        el: "#app",
+        data() {
+          return {
+            chartData: [],
+            chartTitle: "My D3 Title",
+            loadingData: false,
+          };
+        },
+        async mounted() {
+          this.loadData();
+        },
+        methods: {
+          onReload() {
+            this.loadData();
+          },
+          async loadData() {
+            this.loadingData = true;
+            const res = await fetch(
+              "https://api.npoint.io/7695f7d4f7609ec5a0dc"
+            );
+            if (res.ok) {
+              const jsonData = await res.json();
+              this.chartData = jsonData.chartData;
+              this.chartTitle = jsonData.title;
+            }
+            this.loadingData = false;
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
