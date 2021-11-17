@@ -2,6 +2,12 @@
 
 Sample code with d3js and vuejs
 
+Used libraries
+
+- d3js
+- vuejs
+- buefy
+
 ## Edit Data
 
 Edit the data at [nPoint.io](https://www.npoint.io/docs/7695f7d4f7609ec5a0dc)
